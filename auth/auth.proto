@@ -1,6 +1,12 @@
 syntax = "proto3";
 package auth;
-option go_package = "github.com/hoang3ber123/proto-golang;authproto";
+option go_package = "github.com/hoang3ber123/proto-golang/auth;authproto";
+
+// The greeting service definition.
+service AuthService {
+  // Sends a greeting
+  rpc Authorizate (AuthRequest) returns (AuthResponse) {}
+}
 
 // AuthRequest message
 message AuthRequest {
