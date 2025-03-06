@@ -1,0 +1,15 @@
+syntax = "proto3";
+package auth;
+option go_package = "github.com/hoang3ber123/proto-golang;authproto";
+
+// AuthRequest message
+message AuthRequest {
+    string token = 1;
+    string role = 2;
+}
+
+// AuthResponse message
+message AuthResponse {
+    bool is_authenticated = 1;
+    string error = 2;
+}
