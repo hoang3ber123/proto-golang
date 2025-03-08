@@ -11,7 +11,7 @@ service AuthService {
 // AuthRequest message
 message AuthRequest {
     string token = 1;
-    string role = 2;
+    repeated string role = 2;
 }
 
 // AuthResponse message
