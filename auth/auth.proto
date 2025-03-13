@@ -4,18 +4,18 @@ option go_package = "github.com/hoang3ber123/proto-golang/auth;authproto";
 
 // The greeting service definition.
 service AuthService {
-  // Sends a greeting
-  rpc Authorizate (AuthRequest) returns (AuthResponse) {}
+  rpc AuthenticateEmployee (AuthEmployeeRequest) returns (AuthEmployeeResponse) {}
+  rpc AuthenticateUser (AuthUserRequest) returns (AuthUserResponse) {}
 }
 
-// AuthRequest message
-message AuthRequest {
+// AuthEmployeeRequest message
+message AuthEmployeeRequest {
     string token = 1;
     repeated string role = 2;
 }
 
-// User info message
-message User {
+// Employee info message
+message Employee {
     string id = 1;
     string username = 2;
     string email = 3;
@@ -26,8 +26,31 @@ message User {
     bool is_active = 8;
 }
 
-// AuthResponse message
-message AuthResponse {
+// AuthEmployeeResponse message
+message AuthEmployeeResponse {
+    bool is_authenticated = 1;
+    Employee user = 2;
+    int32 status_code = 3;
+    string error = 4;
+}
+
+// AuthUserRequest message
+message AuthUserRequest {
+    string token = 1;
+}
+
+// User info message
+message User {
+    string id = 1;
+    string username = 2;
+    string email = 3;
+    string name = 5;
+    string phone_number = 6;
+    bool is_active = 8;
+}
+
+// AuthUserResponse message
+message AuthUserResponse {
     bool is_authenticated = 1;
     User user = 2;
     int32 status_code = 3;

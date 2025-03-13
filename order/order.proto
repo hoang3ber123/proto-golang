@@ -1,0 +1,33 @@
+syntax = "proto3";
+package order;
+option go_package = "github.com/hoang3ber123/proto-golang/order;orderproto";
+
+// The greeting service definition.
+service OrderService {
+  // Sends a greeting
+  rpc CreateOrder (CreateOrderRequest) returns (CreateOrderResponse) {}
+  rpc GetProductIDs (GetProductIDsRequest) returns (GetProductIDsResponse) {}
+}
+
+// CreateOrderRequest message
+message CreateOrderRequest {
+    string transaction_id = 1;
+    string payment_method = 2;
+}
+
+// CreateOrderResponse message
+message CreateOrderResponse {
+    bool is_created = 1;
+    int32 status_code = 2;
+    string error = 3;
+}
+
+// GetProductIDsRequest message
+message GetProductIDsRequest {}
+
+// GetProductIDsResponse message
+message GetProductIDsResponse {
+    repeated string product_ids = 1;
+    int32 status_code = 2;
+    string error = 3;
+}

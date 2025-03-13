@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_Authorizate_FullMethodName = "/auth.AuthService/Authorizate"
+	AuthService_AuthenticateEmployee_FullMethodName = "/auth.AuthService/AuthenticateEmployee"
+	AuthService_AuthenticateUser_FullMethodName     = "/auth.AuthService/AuthenticateUser"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -28,8 +29,8 @@ const (
 //
 // The greeting service definition.
 type AuthServiceClient interface {
-	// Sends a greeting
-	Authorizate(ctx context.Context, in *AuthRequest, opts ...grpc.CallOption) (*AuthResponse, error)
+	AuthenticateEmployee(ctx context.Context, in *AuthEmployeeRequest, opts ...grpc.CallOption) (*AuthEmployeeResponse, error)
+	AuthenticateUser(ctx context.Context, in *AuthUserRequest, opts ...grpc.CallOption) (*AuthUserResponse, error)
 }
 
 type authServiceClient struct {
@@ -40,10 +41,20 @@ func NewAuthServiceClient(cc grpc.ClientConnInterface) AuthServiceClient {
 	return &authServiceClient{cc}
 }
 
-func (c *authServiceClient) Authorizate(ctx context.Context, in *AuthRequest, opts ...grpc.CallOption) (*AuthResponse, error) {
+func (c *authServiceClient) AuthenticateEmployee(ctx context.Context, in *AuthEmployeeRequest, opts ...grpc.CallOption) (*AuthEmployeeResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AuthResponse)
-	err := c.cc.Invoke(ctx, AuthService_Authorizate_FullMethodName, in, out, cOpts...)
+	out := new(AuthEmployeeResponse)
+	err := c.cc.Invoke(ctx, AuthService_AuthenticateEmployee_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) AuthenticateUser(ctx context.Context, in *AuthUserRequest, opts ...grpc.CallOption) (*AuthUserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AuthUserResponse)
+	err := c.cc.Invoke(ctx, AuthService_AuthenticateUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -56,8 +67,8 @@ func (c *authServiceClient) Authorizate(ctx context.Context, in *AuthRequest, op
 //
 // The greeting service definition.
 type AuthServiceServer interface {
-	// Sends a greeting
-	Authorizate(context.Context, *AuthRequest) (*AuthResponse, error)
+	AuthenticateEmployee(context.Context, *AuthEmployeeRequest) (*AuthEmployeeResponse, error)
+	AuthenticateUser(context.Context, *AuthUserRequest) (*AuthUserResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -68,8 +79,11 @@ type AuthServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAuthServiceServer struct{}
 
-func (UnimplementedAuthServiceServer) Authorizate(context.Context, *AuthRequest) (*AuthResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Authorizate not implemented")
+func (UnimplementedAuthServiceServer) AuthenticateEmployee(context.Context, *AuthEmployeeRequest) (*AuthEmployeeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AuthenticateEmployee not implemented")
+}
+func (UnimplementedAuthServiceServer) AuthenticateUser(context.Context, *AuthUserRequest) (*AuthUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AuthenticateUser not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -92,20 +106,38 @@ func RegisterAuthServiceServer(s grpc.ServiceRegistrar, srv AuthServiceServer) {
 	s.RegisterService(&AuthService_ServiceDesc, srv)
 }
 
-func _AuthService_Authorizate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AuthRequest)
+func _AuthService_AuthenticateEmployee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AuthEmployeeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).Authorizate(ctx, in)
+		return srv.(AuthServiceServer).AuthenticateEmployee(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthService_Authorizate_FullMethodName,
+		FullMethod: AuthService_AuthenticateEmployee_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).Authorizate(ctx, req.(*AuthRequest))
+		return srv.(AuthServiceServer).AuthenticateEmployee(ctx, req.(*AuthEmployeeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_AuthenticateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AuthUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).AuthenticateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_AuthenticateUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).AuthenticateUser(ctx, req.(*AuthUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -118,8 +150,12 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AuthServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Authorizate",
-			Handler:    _AuthService_Authorizate_Handler,
+			MethodName: "AuthenticateEmployee",
+			Handler:    _AuthService_AuthenticateEmployee_Handler,
+		},
+		{
+			MethodName: "AuthenticateUser",
+			Handler:    _AuthService_AuthenticateUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
