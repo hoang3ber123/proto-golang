@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	OrderService_CreateOrder_FullMethodName   = "/order.OrderService/CreateOrder"
-	OrderService_GetProductIDs_FullMethodName = "/order.OrderService/GetProductIDs"
+	OrderService_CreateOrder_FullMethodName         = "/order.OrderService/CreateOrder"
+	OrderService_GetBoughtProductIDs_FullMethodName = "/order.OrderService/GetBoughtProductIDs"
 )
 
 // OrderServiceClient is the client API for OrderService service.
@@ -29,9 +29,10 @@ const (
 //
 // The greeting service definition.
 type OrderServiceClient interface {
-	// Sends a greeting
+	// create payment
 	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
-	GetProductIDs(ctx context.Context, in *GetProductIDsRequest, opts ...grpc.CallOption) (*GetProductIDsResponse, error)
+	// get bought product of user
+	GetBoughtProductIDs(ctx context.Context, in *GetBoughtProductIDsRequest, opts ...grpc.CallOption) (*GetBoughtProductIDsResponse, error)
 }
 
 type orderServiceClient struct {
@@ -52,10 +53,10 @@ func (c *orderServiceClient) CreateOrder(ctx context.Context, in *CreateOrderReq
 	return out, nil
 }
 
-func (c *orderServiceClient) GetProductIDs(ctx context.Context, in *GetProductIDsRequest, opts ...grpc.CallOption) (*GetProductIDsResponse, error) {
+func (c *orderServiceClient) GetBoughtProductIDs(ctx context.Context, in *GetBoughtProductIDsRequest, opts ...grpc.CallOption) (*GetBoughtProductIDsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetProductIDsResponse)
-	err := c.cc.Invoke(ctx, OrderService_GetProductIDs_FullMethodName, in, out, cOpts...)
+	out := new(GetBoughtProductIDsResponse)
+	err := c.cc.Invoke(ctx, OrderService_GetBoughtProductIDs_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -68,9 +69,10 @@ func (c *orderServiceClient) GetProductIDs(ctx context.Context, in *GetProductID
 //
 // The greeting service definition.
 type OrderServiceServer interface {
-	// Sends a greeting
+	// create payment
 	CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
-	GetProductIDs(context.Context, *GetProductIDsRequest) (*GetProductIDsResponse, error)
+	// get bought product of user
+	GetBoughtProductIDs(context.Context, *GetBoughtProductIDsRequest) (*GetBoughtProductIDsResponse, error)
 	mustEmbedUnimplementedOrderServiceServer()
 }
 
@@ -84,8 +86,8 @@ type UnimplementedOrderServiceServer struct{}
 func (UnimplementedOrderServiceServer) CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOrder not implemented")
 }
-func (UnimplementedOrderServiceServer) GetProductIDs(context.Context, *GetProductIDsRequest) (*GetProductIDsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetProductIDs not implemented")
+func (UnimplementedOrderServiceServer) GetBoughtProductIDs(context.Context, *GetBoughtProductIDsRequest) (*GetBoughtProductIDsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBoughtProductIDs not implemented")
 }
 func (UnimplementedOrderServiceServer) mustEmbedUnimplementedOrderServiceServer() {}
 func (UnimplementedOrderServiceServer) testEmbeddedByValue()                      {}
@@ -126,20 +128,20 @@ func _OrderService_CreateOrder_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OrderService_GetProductIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetProductIDsRequest)
+func _OrderService_GetBoughtProductIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBoughtProductIDsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrderServiceServer).GetProductIDs(ctx, in)
+		return srv.(OrderServiceServer).GetBoughtProductIDs(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: OrderService_GetProductIDs_FullMethodName,
+		FullMethod: OrderService_GetBoughtProductIDs_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).GetProductIDs(ctx, req.(*GetProductIDsRequest))
+		return srv.(OrderServiceServer).GetBoughtProductIDs(ctx, req.(*GetBoughtProductIDsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -156,8 +158,8 @@ var OrderService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OrderService_CreateOrder_Handler,
 		},
 		{
-			MethodName: "GetProductIDs",
-			Handler:    _OrderService_GetProductIDs_Handler,
+			MethodName: "GetBoughtProductIDs",
+			Handler:    _OrderService_GetBoughtProductIDs_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
