@@ -22,7 +22,8 @@ message GetProductsInCartRequest {
 message Product {
   string id = 1;
   string title = 2;
-  double price = 3;
+  repeated string images = 3;
+  double price = 4;
 }
 
 // Cart response Message
