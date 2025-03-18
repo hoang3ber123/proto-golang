@@ -23,17 +23,12 @@ message Product {
   string id = 1;
   string title = 2;
   string image = 3;
-  double price = 4;
-}
-
-// Cart response Message
-message CartItemResponse {
-  string key = 1;                  // related_type (Example: "product", "service", ...)
-  repeated Product values = 2; // Product list
+  string related_type =4;
+  double price = 5;
 }
 
 message GetProductsInCartResponse {
-  repeated CartItemResponse cart = 1;
+  repeated Product products = 1;
   int32 status_code = 2;
   string error = 3;
 }
