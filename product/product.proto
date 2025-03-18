@@ -22,7 +22,7 @@ message GetProductsInCartRequest {
 message Product {
   string id = 1;
   string title = 2;
-  string price = 3;
+  double price = 3;
 }
 
 // Cart response Message
