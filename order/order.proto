@@ -34,8 +34,8 @@ message GetProductIDsRequest {
     string payment_status = 5;     // Chỉ cho phép "success" hoặc "cancel"
     int32 page = 6;                // Trang hiện tại
     int32 page_size = 7;           // Số bản ghi mỗi trang
-    string max_price = 8;          // Giá tối đa (chuỗi để dễ parse)
-    string min_price = 9;          // Giá tối thiểu (chuỗi để dễ parse)
+    double max_price = 8;          // Giá tối đa (chuỗi để dễ parse)
+    double min_price = 9;          // Giá tối thiểu (chuỗi để dễ parse)
     string end_payment_day = 10;   // Ngày kết thúc thanh toán (YYYY-MM-DD)
     string start_payment_day = 11; // Ngày bắt đầu thanh toán (YYYY-MM-DD)
     string payment_day_order = 12; // Sắp xếp theo payment_day: "asc" hoặc "desc"

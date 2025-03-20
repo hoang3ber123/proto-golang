@@ -145,8 +145,8 @@ type GetProductIDsRequest struct {
 	PaymentStatus   string                 `protobuf:"bytes,5,opt,name=payment_status,json=paymentStatus,proto3" json:"payment_status,omitempty"`          // Chỉ cho phép "success" hoặc "cancel"
 	Page            int32                  `protobuf:"varint,6,opt,name=page,proto3" json:"page,omitempty"`                                                // Trang hiện tại
 	PageSize        int32                  `protobuf:"varint,7,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`                        // Số bản ghi mỗi trang
-	MaxPrice        string                 `protobuf:"bytes,8,opt,name=max_price,json=maxPrice,proto3" json:"max_price,omitempty"`                         // Giá tối đa (chuỗi để dễ parse)
-	MinPrice        string                 `protobuf:"bytes,9,opt,name=min_price,json=minPrice,proto3" json:"min_price,omitempty"`                         // Giá tối thiểu (chuỗi để dễ parse)
+	MaxPrice        float64                `protobuf:"fixed64,8,opt,name=max_price,json=maxPrice,proto3" json:"max_price,omitempty"`                       // Giá tối đa (chuỗi để dễ parse)
+	MinPrice        float64                `protobuf:"fixed64,9,opt,name=min_price,json=minPrice,proto3" json:"min_price,omitempty"`                       // Giá tối thiểu (chuỗi để dễ parse)
 	EndPaymentDay   string                 `protobuf:"bytes,10,opt,name=end_payment_day,json=endPaymentDay,proto3" json:"end_payment_day,omitempty"`       // Ngày kết thúc thanh toán (YYYY-MM-DD)
 	StartPaymentDay string                 `protobuf:"bytes,11,opt,name=start_payment_day,json=startPaymentDay,proto3" json:"start_payment_day,omitempty"` // Ngày bắt đầu thanh toán (YYYY-MM-DD)
 	PaymentDayOrder string                 `protobuf:"bytes,12,opt,name=payment_day_order,json=paymentDayOrder,proto3" json:"payment_day_order,omitempty"` // Sắp xếp theo payment_day: "asc" hoặc "desc"
@@ -234,18 +234,18 @@ func (x *GetProductIDsRequest) GetPageSize() int32 {
 	return 0
 }
 
-func (x *GetProductIDsRequest) GetMaxPrice() string {
+func (x *GetProductIDsRequest) GetMaxPrice() float64 {
 	if x != nil {
 		return x.MaxPrice
 	}
-	return ""
+	return 0
 }
 
-func (x *GetProductIDsRequest) GetMinPrice() string {
+func (x *GetProductIDsRequest) GetMinPrice() float64 {
 	if x != nil {
 		return x.MinPrice
 	}
-	return ""
+	return 0
 }
 
 func (x *GetProductIDsRequest) GetEndPaymentDay() string {
@@ -569,9 +569,9 @@ var file_order_order_proto_rawDesc = string([]byte{
 	0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x70, 0x61, 0x67, 0x65, 0x12, 0x1b, 0x0a,
 	0x09, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x05,
 	0x52, 0x08, 0x70, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6d, 0x61,
-	0x78, 0x5f, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6d,
+	0x78, 0x5f, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x6d,
 	0x61, 0x78, 0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6d, 0x69, 0x6e, 0x5f, 0x70,
-	0x72, 0x69, 0x63, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6d, 0x69, 0x6e, 0x50,
+	0x72, 0x69, 0x63, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x6d, 0x69, 0x6e, 0x50,
 	0x72, 0x69, 0x63, 0x65, 0x12, 0x26, 0x0a, 0x0f, 0x65, 0x6e, 0x64, 0x5f, 0x70, 0x61, 0x79, 0x6d,
 	0x65, 0x6e, 0x74, 0x5f, 0x64, 0x61, 0x79, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x65,
 	0x6e, 0x64, 0x50, 0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x44, 0x61, 0x79, 0x12, 0x2a, 0x0a, 0x11,
