@@ -7,7 +7,7 @@ service OrderService {
   // create payment
   rpc CreateOrder (CreateOrderRequest) returns (CreateOrderResponse) {}
   // get bought product of user
-  rpc GetBoughtProductIDs (GetBoughtProductIDsRequest) returns (GetBoughtProductIDsResponse) {}
+  rpc GetProductIDs (GetProductIDsRequest) returns (GetProductIDsResponse) {}
   // check bought product of user
   rpc CheckBoughtProduct (CheckBoughtProductRequest) returns (CheckBoughtProductResponse) {}
 }
@@ -25,22 +25,37 @@ message CreateOrderResponse {
     string error = 3;
 }
 
-// GetBoughtProductIDsRequest message
-message GetBoughtProductIDsRequest {
-    string order_id = 1;
-    string user_id = 2;
+// GetProductIDsRequest message
+message GetProductIDsRequest {
+    string order_id = 1;           // Lọc theo order_id nếu có
+    string user_id = 2;            // Lọc theo user_id nếu có
+    string related_type = 3;       // Lọc theo related_type nếu có
+    string payment_method = 4;     // Chỉ cho phép "vnpay" hoặc "stripe"
+    string payment_status = 5;     // Chỉ cho phép "success" hoặc "cancel"
+    int32 page = 6;                // Trang hiện tại
+    int32 page_size = 7;           // Số bản ghi mỗi trang
+    string max_price = 8;          // Giá tối đa (chuỗi để dễ parse)
+    string min_price = 9;          // Giá tối thiểu (chuỗi để dễ parse)
+    string end_payment_day = 10;   // Ngày kết thúc thanh toán (YYYY-MM-DD)
+    string start_payment_day = 11; // Ngày bắt đầu thanh toán (YYYY-MM-DD)
+    string payment_day_order = 12; // Sắp xếp theo payment_day: "asc" hoặc "desc"
+    string price_order = 13;       // Sắp xếp theo giá: "asc" hoặc "desc"
 }
 
-message BoughtProduct {
-    string related_id = 1;
-    string related_type = 2;
+// Pagination message
+message Pagination {
+    int32 page = 1;         // Trang hiện tại
+    int32 page_size = 2;    // Số bản ghi mỗi trang
+    int32 total = 3;        // Tổng số bản ghi
+    int32 total_page = 4;   // Tổng số trang
 }
 
-// GetBoughtProductIDsResponse message
-message GetBoughtProductIDsResponse {
-    repeated BoughtProduct products = 1;
-    int32 status_code = 2;
-    string error = 3;
+// GetProductIDsResponse message
+message GetProductIDsResponse {
+    repeated string product_ids = 1; // Danh sách ID sản phẩm
+    Pagination pagination = 2;       // Thông tin phân trang
+    int32 status_code = 3;           // Mã trạng thái HTTP
+    string error = 4;                // Thông báo lỗi (nếu có)
 }
 
 // CheckBoughtProductRequest message
