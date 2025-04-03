@@ -5,7 +5,7 @@ import grpc
 import recommend_pb2 as recommend__pb2
 
 
-class ProductServiceStub(object):
+class RecommendServiceStub(object):
     """The greeting service definition.
     """
 
@@ -16,18 +16,18 @@ class ProductServiceStub(object):
             channel: A grpc.Channel.
         """
         self.GetRecommendCategoryIDs = channel.unary_unary(
-                '/recommend.ProductService/GetRecommendCategoryIDs',
+                '/recommend.RecommendService/GetRecommendCategoryIDs',
                 request_serializer=recommend__pb2.GetRecommendCategoryIDsRequest.SerializeToString,
                 response_deserializer=recommend__pb2.GetRecommendCategoryIDsResponse.FromString,
                 )
         self.GetRecommendProductIDs = channel.unary_unary(
-                '/recommend.ProductService/GetRecommendProductIDs',
+                '/recommend.RecommendService/GetRecommendProductIDs',
                 request_serializer=recommend__pb2.GetRecommendCategoryIDsRequest.SerializeToString,
                 response_deserializer=recommend__pb2.GetRecommendProductIDsResponse.FromString,
                 )
 
 
-class ProductServiceServicer(object):
+class RecommendServiceServicer(object):
     """The greeting service definition.
     """
 
@@ -46,7 +46,7 @@ class ProductServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_ProductServiceServicer_to_server(servicer, server):
+def add_RecommendServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetRecommendCategoryIDs': grpc.unary_unary_rpc_method_handler(
                     servicer.GetRecommendCategoryIDs,
@@ -60,12 +60,12 @@ def add_ProductServiceServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'recommend.ProductService', rpc_method_handlers)
+            'recommend.RecommendService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class ProductService(object):
+class RecommendService(object):
     """The greeting service definition.
     """
 
@@ -80,7 +80,7 @@ class ProductService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/recommend.ProductService/GetRecommendCategoryIDs',
+        return grpc.experimental.unary_unary(request, target, '/recommend.RecommendService/GetRecommendCategoryIDs',
             recommend__pb2.GetRecommendCategoryIDsRequest.SerializeToString,
             recommend__pb2.GetRecommendCategoryIDsResponse.FromString,
             options, channel_credentials,
@@ -97,7 +97,7 @@ class ProductService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/recommend.ProductService/GetRecommendProductIDs',
+        return grpc.experimental.unary_unary(request, target, '/recommend.RecommendService/GetRecommendProductIDs',
             recommend__pb2.GetRecommendCategoryIDsRequest.SerializeToString,
             recommend__pb2.GetRecommendProductIDsResponse.FromString,
             options, channel_credentials,

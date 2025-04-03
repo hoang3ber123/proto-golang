@@ -4,7 +4,7 @@ import "google/protobuf/timestamp.proto";
 option go_package = "github.com/hoang3ber123/proto-golang/recommend;recommendproto";
 
 // The greeting service definition.
-service ProductService {
+service RecommendService {
   // get category recommend
   rpc GetRecommendCategoryIDs (GetRecommendCategoryIDsRequest) returns (GetRecommendCategoryIDsResponse);
   // get product recommend
