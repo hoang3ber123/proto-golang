@@ -1,17 +1,11 @@
 syntax = "proto3";
 package product;
-import "google/protobuf/timestamp.proto";
 option go_package = "github.com/hoang3ber123/proto-golang/product;productproto";
 
 // The greeting service definition.
 service ProductService {
   // get product list in cart
   rpc GetProductsInCart (GetProductsInCartRequest) returns (GetProductsInCartResponse);
-  // get category list
-  rpc GetCategoryList (GetCategoriesRequest) returns (GetCategoriesResponse);
-  // get product recommend
-  rpc GetRecommendProduct (GetRecommendProductRequest) returns (GetRecommendProductResponse);
-
 }
 
 // Cart Message
@@ -37,50 +31,4 @@ message GetProductsInCartResponse {
   repeated Product products = 1;
   int32 status_code = 2;
   string error = 3;
-}
-
-message Category {
-  string id = 1;
-  string title = 2;
-  string description = 3;
-}
-
-// GetCategoriesRequest mesage
-message GetCategoriesRequest {
-  string query = 1;
-  repeated Category categories = 2;
-}
-
-message GetCategoriesResponse {
-  repeated string categories_id = 1;
-}
-
-message ProductRecommend {
-  string id = 1;
-  string title = 2;
-  repeated string categories = 3;
-  google.protobuf.Timestamp created_at = 4;
-  double pricing = 5;
-}
-
-message ClickDetail {
-  string product_id = 1;
-  int32 click_time = 2;
-}
-
-message ViewProduct {
-  string product_id = 1;
-  int32 view_time = 2;
-}
-
-message GetRecommendProductRequest {
-  repeated Category categories = 1;
-  repeated ProductRecommend products = 2;
-  repeated ClickDetail click_details = 3;
-  repeated ViewProduct view_products = 4;
-  repeated string bought_products = 5;
-}
-
-message GetRecommendProductResponse {
-  repeated string products_id = 1;
 }

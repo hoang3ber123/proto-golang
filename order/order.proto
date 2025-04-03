@@ -10,6 +10,8 @@ service OrderService {
   rpc GetProductIDs (GetProductIDsRequest) returns (GetProductIDsResponse) {}
   // check bought product of user
   rpc CheckBoughtProduct (CheckBoughtProductRequest) returns (CheckBoughtProductResponse) {}
+  // get all bought product
+  rpc GetAllProductIDs (GetAllProductIDsRequest) returns (GetAllProductIDsResponse) {}
 }
 
 // CreateOrderRequest message
@@ -70,4 +72,18 @@ message CheckBoughtProductResponse {
     bool is_bought = 1;
     int32 status_code = 2;
     string error = 3;
+}
+
+
+// GetAllProductIDsRequest message
+message GetAllProductIDsRequest {
+    string user_id = 1;            // Lọc theo user_id nếu có
+    string related_type = 2;       // Lọc theo related_type nếu có
+}
+
+// GetAllProductIDsResponse message
+message GetAllProductIDsResponse {
+    repeated string product_ids = 1; // Danh sách ID sản phẩm
+    int32 status_code = 2;           // Mã trạng thái HTTP
+    string error = 3;                // Thông báo lỗi (nếu có)
 }

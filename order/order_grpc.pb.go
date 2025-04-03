@@ -22,6 +22,7 @@ const (
 	OrderService_CreateOrder_FullMethodName        = "/order.OrderService/CreateOrder"
 	OrderService_GetProductIDs_FullMethodName      = "/order.OrderService/GetProductIDs"
 	OrderService_CheckBoughtProduct_FullMethodName = "/order.OrderService/CheckBoughtProduct"
+	OrderService_GetAllProductIDs_FullMethodName   = "/order.OrderService/GetAllProductIDs"
 )
 
 // OrderServiceClient is the client API for OrderService service.
@@ -36,6 +37,8 @@ type OrderServiceClient interface {
 	GetProductIDs(ctx context.Context, in *GetProductIDsRequest, opts ...grpc.CallOption) (*GetProductIDsResponse, error)
 	// check bought product of user
 	CheckBoughtProduct(ctx context.Context, in *CheckBoughtProductRequest, opts ...grpc.CallOption) (*CheckBoughtProductResponse, error)
+	// get all bought product
+	GetAllProductIDs(ctx context.Context, in *GetAllProductIDsRequest, opts ...grpc.CallOption) (*GetAllProductIDsResponse, error)
 }
 
 type orderServiceClient struct {
@@ -76,6 +79,16 @@ func (c *orderServiceClient) CheckBoughtProduct(ctx context.Context, in *CheckBo
 	return out, nil
 }
 
+func (c *orderServiceClient) GetAllProductIDs(ctx context.Context, in *GetAllProductIDsRequest, opts ...grpc.CallOption) (*GetAllProductIDsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetAllProductIDsResponse)
+	err := c.cc.Invoke(ctx, OrderService_GetAllProductIDs_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrderServiceServer is the server API for OrderService service.
 // All implementations must embed UnimplementedOrderServiceServer
 // for forward compatibility.
@@ -88,6 +101,8 @@ type OrderServiceServer interface {
 	GetProductIDs(context.Context, *GetProductIDsRequest) (*GetProductIDsResponse, error)
 	// check bought product of user
 	CheckBoughtProduct(context.Context, *CheckBoughtProductRequest) (*CheckBoughtProductResponse, error)
+	// get all bought product
+	GetAllProductIDs(context.Context, *GetAllProductIDsRequest) (*GetAllProductIDsResponse, error)
 	mustEmbedUnimplementedOrderServiceServer()
 }
 
@@ -106,6 +121,9 @@ func (UnimplementedOrderServiceServer) GetProductIDs(context.Context, *GetProduc
 }
 func (UnimplementedOrderServiceServer) CheckBoughtProduct(context.Context, *CheckBoughtProductRequest) (*CheckBoughtProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckBoughtProduct not implemented")
+}
+func (UnimplementedOrderServiceServer) GetAllProductIDs(context.Context, *GetAllProductIDsRequest) (*GetAllProductIDsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllProductIDs not implemented")
 }
 func (UnimplementedOrderServiceServer) mustEmbedUnimplementedOrderServiceServer() {}
 func (UnimplementedOrderServiceServer) testEmbeddedByValue()                      {}
@@ -182,6 +200,24 @@ func _OrderService_CheckBoughtProduct_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderService_GetAllProductIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllProductIDsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderServiceServer).GetAllProductIDs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderService_GetAllProductIDs_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderServiceServer).GetAllProductIDs(ctx, req.(*GetAllProductIDsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrderService_ServiceDesc is the grpc.ServiceDesc for OrderService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -200,6 +236,10 @@ var OrderService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckBoughtProduct",
 			Handler:    _OrderService_CheckBoughtProduct_Handler,
+		},
+		{
+			MethodName: "GetAllProductIDs",
+			Handler:    _OrderService_GetAllProductIDs_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

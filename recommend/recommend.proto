@@ -1,0 +1,59 @@
+syntax = "proto3";
+package recommend;
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/hoang3ber123/proto-golang/recommend;recommendproto";
+
+// The greeting service definition.
+service ProductService {
+  // get category recommend
+  rpc GetRecommendCategoryIDs (GetRecommendCategoryIDsRequest) returns (GetRecommendCategoryIDsResponse);
+  // get product recommend
+  rpc GetRecommendProductIDs (GetRecommendCategoryIDsRequest) returns (GetRecommendProductIDsResponse);
+
+}
+
+message Category {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+}
+
+// GetRecommendCategoryIDsRequest mesage
+message GetRecommendCategoryIDsRequest {
+  string query = 1;
+  repeated Category categories = 2;
+}
+
+message GetRecommendCategoryIDsResponse {
+  repeated string categories_id = 1;
+}
+
+message ProductRecommend {
+  string id = 1;
+  string title = 2;
+  repeated string categories = 3;
+  google.protobuf.Timestamp created_at = 4;
+  double pricing = 5;
+}
+
+message ClickDetail {
+  string product_id = 1;
+  int32 click_time = 2;
+}
+
+message ViewProduct {
+  string product_id = 1;
+  int32 view_time = 2;
+}
+
+message GetRecommendProductIDsRequest {
+  repeated Category categories = 1;
+  repeated ProductRecommend products = 2;
+  repeated ClickDetail click_details = 3;
+  repeated ViewProduct view_products = 4;
+  repeated string bought_products = 5;
+}
+
+message GetRecommendProductIDsResponse {
+  repeated string products_id = 1;
+}
