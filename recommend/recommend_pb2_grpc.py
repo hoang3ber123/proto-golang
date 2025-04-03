@@ -22,7 +22,7 @@ class RecommendServiceStub(object):
                 )
         self.GetRecommendProductIDs = channel.unary_unary(
                 '/recommend.RecommendService/GetRecommendProductIDs',
-                request_serializer=recommend__pb2.GetRecommendCategoryIDsRequest.SerializeToString,
+                request_serializer=recommend__pb2.GetRecommendProductIDsRequest.SerializeToString,
                 response_deserializer=recommend__pb2.GetRecommendProductIDsResponse.FromString,
                 )
 
@@ -55,7 +55,7 @@ def add_RecommendServiceServicer_to_server(servicer, server):
             ),
             'GetRecommendProductIDs': grpc.unary_unary_rpc_method_handler(
                     servicer.GetRecommendProductIDs,
-                    request_deserializer=recommend__pb2.GetRecommendCategoryIDsRequest.FromString,
+                    request_deserializer=recommend__pb2.GetRecommendProductIDsRequest.FromString,
                     response_serializer=recommend__pb2.GetRecommendProductIDsResponse.SerializeToString,
             ),
     }
@@ -98,7 +98,7 @@ class RecommendService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/recommend.RecommendService/GetRecommendProductIDs',
-            recommend__pb2.GetRecommendCategoryIDsRequest.SerializeToString,
+            recommend__pb2.GetRecommendProductIDsRequest.SerializeToString,
             recommend__pb2.GetRecommendProductIDsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

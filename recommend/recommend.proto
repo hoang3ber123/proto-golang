@@ -8,7 +8,7 @@ service RecommendService {
   // get category recommend
   rpc GetRecommendCategoryIDs (GetRecommendCategoryIDsRequest) returns (GetRecommendCategoryIDsResponse);
   // get product recommend
-  rpc GetRecommendProductIDs (GetRecommendCategoryIDsRequest) returns (GetRecommendProductIDsResponse);
+  rpc GetRecommendProductIDs (GetRecommendProductIDsRequest) returns (GetRecommendProductIDsResponse);
 
 }
 
@@ -25,7 +25,7 @@ message GetRecommendCategoryIDsRequest {
 }
 
 message GetRecommendCategoryIDsResponse {
-  repeated string categories_id = 1;
+  repeated string category_ids = 1;
 }
 
 message ProductRecommend {
@@ -47,13 +47,12 @@ message ViewProduct {
 }
 
 message GetRecommendProductIDsRequest {
-  repeated Category categories = 1;
-  repeated ProductRecommend products = 2;
-  repeated ClickDetail click_details = 3;
-  repeated ViewProduct view_products = 4;
-  repeated string bought_products = 5;
+  repeated ProductRecommend products = 1;
+  repeated ClickDetail click_details = 2;
+  repeated ViewProduct view_products = 3;
+  repeated string bought_products = 4;
 }
 
 message GetRecommendProductIDsResponse {
-  repeated string products_id = 1;
+  repeated string product_ids = 1;
 }

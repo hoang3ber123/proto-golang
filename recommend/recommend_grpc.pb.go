@@ -32,7 +32,7 @@ type RecommendServiceClient interface {
 	// get category recommend
 	GetRecommendCategoryIDs(ctx context.Context, in *GetRecommendCategoryIDsRequest, opts ...grpc.CallOption) (*GetRecommendCategoryIDsResponse, error)
 	// get product recommend
-	GetRecommendProductIDs(ctx context.Context, in *GetRecommendCategoryIDsRequest, opts ...grpc.CallOption) (*GetRecommendProductIDsResponse, error)
+	GetRecommendProductIDs(ctx context.Context, in *GetRecommendProductIDsRequest, opts ...grpc.CallOption) (*GetRecommendProductIDsResponse, error)
 }
 
 type recommendServiceClient struct {
@@ -53,7 +53,7 @@ func (c *recommendServiceClient) GetRecommendCategoryIDs(ctx context.Context, in
 	return out, nil
 }
 
-func (c *recommendServiceClient) GetRecommendProductIDs(ctx context.Context, in *GetRecommendCategoryIDsRequest, opts ...grpc.CallOption) (*GetRecommendProductIDsResponse, error) {
+func (c *recommendServiceClient) GetRecommendProductIDs(ctx context.Context, in *GetRecommendProductIDsRequest, opts ...grpc.CallOption) (*GetRecommendProductIDsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetRecommendProductIDsResponse)
 	err := c.cc.Invoke(ctx, RecommendService_GetRecommendProductIDs_FullMethodName, in, out, cOpts...)
@@ -72,7 +72,7 @@ type RecommendServiceServer interface {
 	// get category recommend
 	GetRecommendCategoryIDs(context.Context, *GetRecommendCategoryIDsRequest) (*GetRecommendCategoryIDsResponse, error)
 	// get product recommend
-	GetRecommendProductIDs(context.Context, *GetRecommendCategoryIDsRequest) (*GetRecommendProductIDsResponse, error)
+	GetRecommendProductIDs(context.Context, *GetRecommendProductIDsRequest) (*GetRecommendProductIDsResponse, error)
 	mustEmbedUnimplementedRecommendServiceServer()
 }
 
@@ -86,7 +86,7 @@ type UnimplementedRecommendServiceServer struct{}
 func (UnimplementedRecommendServiceServer) GetRecommendCategoryIDs(context.Context, *GetRecommendCategoryIDsRequest) (*GetRecommendCategoryIDsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRecommendCategoryIDs not implemented")
 }
-func (UnimplementedRecommendServiceServer) GetRecommendProductIDs(context.Context, *GetRecommendCategoryIDsRequest) (*GetRecommendProductIDsResponse, error) {
+func (UnimplementedRecommendServiceServer) GetRecommendProductIDs(context.Context, *GetRecommendProductIDsRequest) (*GetRecommendProductIDsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRecommendProductIDs not implemented")
 }
 func (UnimplementedRecommendServiceServer) mustEmbedUnimplementedRecommendServiceServer() {}
@@ -129,7 +129,7 @@ func _RecommendService_GetRecommendCategoryIDs_Handler(srv interface{}, ctx cont
 }
 
 func _RecommendService_GetRecommendProductIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRecommendCategoryIDsRequest)
+	in := new(GetRecommendProductIDsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -141,7 +141,7 @@ func _RecommendService_GetRecommendProductIDs_Handler(srv interface{}, ctx conte
 		FullMethod: RecommendService_GetRecommendProductIDs_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RecommendServiceServer).GetRecommendProductIDs(ctx, req.(*GetRecommendCategoryIDsRequest))
+		return srv.(RecommendServiceServer).GetRecommendProductIDs(ctx, req.(*GetRecommendProductIDsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
