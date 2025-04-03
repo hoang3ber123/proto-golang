@@ -19,7 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ProductService_GetProductsInCart_FullMethodName = "/product.ProductService/GetProductsInCart"
+	ProductService_GetProductsInCart_FullMethodName   = "/product.ProductService/GetProductsInCart"
+	ProductService_GetCategoryList_FullMethodName     = "/product.ProductService/GetCategoryList"
+	ProductService_GetRecommendProduct_FullMethodName = "/product.ProductService/GetRecommendProduct"
 )
 
 // ProductServiceClient is the client API for ProductService service.
@@ -30,6 +32,10 @@ const (
 type ProductServiceClient interface {
 	// get product list in cart
 	GetProductsInCart(ctx context.Context, in *GetProductsInCartRequest, opts ...grpc.CallOption) (*GetProductsInCartResponse, error)
+	// get category list
+	GetCategoryList(ctx context.Context, in *GetCategoriesRequest, opts ...grpc.CallOption) (*GetCategoriesResponse, error)
+	// get product recommend
+	GetRecommendProduct(ctx context.Context, in *GetRecommendProductRequest, opts ...grpc.CallOption) (*GetRecommendProductResponse, error)
 }
 
 type productServiceClient struct {
@@ -50,6 +56,26 @@ func (c *productServiceClient) GetProductsInCart(ctx context.Context, in *GetPro
 	return out, nil
 }
 
+func (c *productServiceClient) GetCategoryList(ctx context.Context, in *GetCategoriesRequest, opts ...grpc.CallOption) (*GetCategoriesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCategoriesResponse)
+	err := c.cc.Invoke(ctx, ProductService_GetCategoryList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productServiceClient) GetRecommendProduct(ctx context.Context, in *GetRecommendProductRequest, opts ...grpc.CallOption) (*GetRecommendProductResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetRecommendProductResponse)
+	err := c.cc.Invoke(ctx, ProductService_GetRecommendProduct_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductServiceServer is the server API for ProductService service.
 // All implementations must embed UnimplementedProductServiceServer
 // for forward compatibility.
@@ -58,6 +84,10 @@ func (c *productServiceClient) GetProductsInCart(ctx context.Context, in *GetPro
 type ProductServiceServer interface {
 	// get product list in cart
 	GetProductsInCart(context.Context, *GetProductsInCartRequest) (*GetProductsInCartResponse, error)
+	// get category list
+	GetCategoryList(context.Context, *GetCategoriesRequest) (*GetCategoriesResponse, error)
+	// get product recommend
+	GetRecommendProduct(context.Context, *GetRecommendProductRequest) (*GetRecommendProductResponse, error)
 	mustEmbedUnimplementedProductServiceServer()
 }
 
@@ -70,6 +100,12 @@ type UnimplementedProductServiceServer struct{}
 
 func (UnimplementedProductServiceServer) GetProductsInCart(context.Context, *GetProductsInCartRequest) (*GetProductsInCartResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsInCart not implemented")
+}
+func (UnimplementedProductServiceServer) GetCategoryList(context.Context, *GetCategoriesRequest) (*GetCategoriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryList not implemented")
+}
+func (UnimplementedProductServiceServer) GetRecommendProduct(context.Context, *GetRecommendProductRequest) (*GetRecommendProductResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRecommendProduct not implemented")
 }
 func (UnimplementedProductServiceServer) mustEmbedUnimplementedProductServiceServer() {}
 func (UnimplementedProductServiceServer) testEmbeddedByValue()                        {}
@@ -110,6 +146,42 @@ func _ProductService_GetProductsInCart_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ProductService_GetCategoryList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCategoriesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServiceServer).GetCategoryList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ProductService_GetCategoryList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServiceServer).GetCategoryList(ctx, req.(*GetCategoriesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductService_GetRecommendProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRecommendProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServiceServer).GetRecommendProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ProductService_GetRecommendProduct_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServiceServer).GetRecommendProduct(ctx, req.(*GetRecommendProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ProductService_ServiceDesc is the grpc.ServiceDesc for ProductService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -120,6 +192,14 @@ var ProductService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductsInCart",
 			Handler:    _ProductService_GetProductsInCart_Handler,
+		},
+		{
+			MethodName: "GetCategoryList",
+			Handler:    _ProductService_GetCategoryList_Handler,
+		},
+		{
+			MethodName: "GetRecommendProduct",
+			Handler:    _ProductService_GetRecommendProduct_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
