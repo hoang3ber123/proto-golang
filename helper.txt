@@ -3,7 +3,11 @@
 // biên dịch thành file golang
 protoc --go_out=. --go-grpc_out=. --go_opt=paths=source_relative --go-grpc_opt=paths=source_relative auth/auth.proto
 // biên dịch thành file python
-python -m grpc_tools.protoc -I./recommend --python_out=./recommend --grpc_python_out=./recommend ./recommend/recommend.proto
+B1 :python -m grpc_tools.protoc -I./recommend --python_out=./recommend --grpc_python_out=./recommend ./recommend/recommend.proto
+B2 : vào file recommend_pb2_grpc.py sửa:
+import recommend_pb2 as recommend__pb2
+thành 
+from . import recommend_pb2 as recommend__pb2
 // các bước push lên github
 // B1: git add .
 // B2: git commit

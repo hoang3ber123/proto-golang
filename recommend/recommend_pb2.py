@@ -12,10 +12,9 @@ from google.protobuf.internal import builder as _builder
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0frecommend.proto\x12\trecommend\x1a\x1fgoogle/protobuf/timestamp.proto\":\n\x08\x43\x61tegory\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\"X\n\x1eGetRecommendCategoryIDsRequest\x12\r\n\x05query\x18\x01 \x01(\t\x12\'\n\ncategories\x18\x02 \x03(\x0b\x32\x13.recommend.Category\"7\n\x1fGetRecommendCategoryIDsResponse\x12\x14\n\x0c\x63\x61tegory_ids\x18\x01 \x03(\t\"\x82\x01\n\x10ProductRecommend\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x12\n\ncategories\x18\x03 \x03(\t\x12.\n\ncreated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0f\n\x07pricing\x18\x05 \x01(\x01\"5\n\x0b\x43lickDetail\x12\x12\n\nproduct_id\x18\x01 \x01(\t\x12\x12\n\nclick_time\x18\x02 \x01(\x05\"4\n\x0bViewProduct\x12\x12\n\nproduct_id\x18\x01 \x01(\t\x12\x11\n\tview_time\x18\x02 \x01(\x05\"\xc5\x01\n\x1dGetRecommendProductIDsRequest\x12-\n\x08products\x18\x01 \x03(\x0b\x32\x1b.recommend.ProductRecommend\x12-\n\rclick_details\x18\x02 \x03(\x0b\x32\x16.recommend.ClickDetail\x12-\n\rview_products\x18\x03 \x03(\x0b\x32\x16.recommend.ViewProduct\x12\x17\n\x0f\x62ought_products\x18\x04 \x03(\t\"5\n\x1eGetRecommendProductIDsResponse\x12\x13\n\x0bproduct_ids\x18\x01 \x03(\t2\xf3\x01\n\x10RecommendService\x12p\n\x17GetRecommendCategoryIDs\x12).recommend.GetRecommendCategoryIDsRequest\x1a*.recommend.GetRecommendCategoryIDsResponse\x12m\n\x16GetRecommendProductIDs\x12(.recommend.GetRecommendProductIDsRequest\x1a).recommend.GetRecommendProductIDsResponseB?Z=github.com/hoang3ber123/proto-golang/recommend;recommendprotob\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0frecommend.proto\x12\trecommend\":\n\x08\x43\x61tegory\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\"X\n\x1eGetRecommendCategoryIDsRequest\x12\r\n\x05query\x18\x01 \x01(\t\x12\'\n\ncategories\x18\x02 \x03(\x0b\x32\x13.recommend.Category\"7\n\x1fGetRecommendCategoryIDsResponse\x12\x14\n\x0c\x63\x61tegory_ids\x18\x01 \x03(\t\"f\n\x10ProductRecommend\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x12\n\ncategories\x18\x03 \x03(\t\x12\x12\n\ncreated_at\x18\x04 \x01(\t\x12\x0f\n\x07pricing\x18\x05 \x01(\x01\"5\n\x0b\x43lickDetail\x12\x12\n\nproduct_id\x18\x01 \x01(\t\x12\x12\n\nclick_time\x18\x02 \x01(\x05\"4\n\x0bViewProduct\x12\x12\n\nproduct_id\x18\x01 \x01(\t\x12\x11\n\tview_time\x18\x02 \x01(\x05\"\xc5\x01\n\x1dGetRecommendProductIDsRequest\x12-\n\x08products\x18\x01 \x03(\x0b\x32\x1b.recommend.ProductRecommend\x12-\n\rclick_details\x18\x02 \x03(\x0b\x32\x16.recommend.ClickDetail\x12-\n\rview_products\x18\x03 \x03(\x0b\x32\x16.recommend.ViewProduct\x12\x17\n\x0f\x62ought_products\x18\x04 \x03(\t\"5\n\x1eGetRecommendProductIDsResponse\x12\x13\n\x0bproduct_ids\x18\x01 \x03(\t2\xf3\x01\n\x10RecommendService\x12p\n\x17GetRecommendCategoryIDs\x12).recommend.GetRecommendCategoryIDsRequest\x1a*.recommend.GetRecommendCategoryIDsResponse\x12m\n\x16GetRecommendProductIDs\x12(.recommend.GetRecommendProductIDsRequest\x1a).recommend.GetRecommendProductIDsResponseB?Z=github.com/hoang3ber123/proto-golang/recommend;recommendprotob\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -23,22 +22,22 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'recommend_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['DESCRIPTOR']._options = None
   _globals['DESCRIPTOR']._serialized_options = b'Z=github.com/hoang3ber123/proto-golang/recommend;recommendproto'
-  _globals['_CATEGORY']._serialized_start=63
-  _globals['_CATEGORY']._serialized_end=121
-  _globals['_GETRECOMMENDCATEGORYIDSREQUEST']._serialized_start=123
-  _globals['_GETRECOMMENDCATEGORYIDSREQUEST']._serialized_end=211
-  _globals['_GETRECOMMENDCATEGORYIDSRESPONSE']._serialized_start=213
-  _globals['_GETRECOMMENDCATEGORYIDSRESPONSE']._serialized_end=268
-  _globals['_PRODUCTRECOMMEND']._serialized_start=271
-  _globals['_PRODUCTRECOMMEND']._serialized_end=401
-  _globals['_CLICKDETAIL']._serialized_start=403
-  _globals['_CLICKDETAIL']._serialized_end=456
-  _globals['_VIEWPRODUCT']._serialized_start=458
-  _globals['_VIEWPRODUCT']._serialized_end=510
-  _globals['_GETRECOMMENDPRODUCTIDSREQUEST']._serialized_start=513
-  _globals['_GETRECOMMENDPRODUCTIDSREQUEST']._serialized_end=710
-  _globals['_GETRECOMMENDPRODUCTIDSRESPONSE']._serialized_start=712
-  _globals['_GETRECOMMENDPRODUCTIDSRESPONSE']._serialized_end=765
-  _globals['_RECOMMENDSERVICE']._serialized_start=768
-  _globals['_RECOMMENDSERVICE']._serialized_end=1011
+  _globals['_CATEGORY']._serialized_start=30
+  _globals['_CATEGORY']._serialized_end=88
+  _globals['_GETRECOMMENDCATEGORYIDSREQUEST']._serialized_start=90
+  _globals['_GETRECOMMENDCATEGORYIDSREQUEST']._serialized_end=178
+  _globals['_GETRECOMMENDCATEGORYIDSRESPONSE']._serialized_start=180
+  _globals['_GETRECOMMENDCATEGORYIDSRESPONSE']._serialized_end=235
+  _globals['_PRODUCTRECOMMEND']._serialized_start=237
+  _globals['_PRODUCTRECOMMEND']._serialized_end=339
+  _globals['_CLICKDETAIL']._serialized_start=341
+  _globals['_CLICKDETAIL']._serialized_end=394
+  _globals['_VIEWPRODUCT']._serialized_start=396
+  _globals['_VIEWPRODUCT']._serialized_end=448
+  _globals['_GETRECOMMENDPRODUCTIDSREQUEST']._serialized_start=451
+  _globals['_GETRECOMMENDPRODUCTIDSREQUEST']._serialized_end=648
+  _globals['_GETRECOMMENDPRODUCTIDSRESPONSE']._serialized_start=650
+  _globals['_GETRECOMMENDPRODUCTIDSRESPONSE']._serialized_end=703
+  _globals['_RECOMMENDSERVICE']._serialized_start=706
+  _globals['_RECOMMENDSERVICE']._serialized_end=949
 # @@protoc_insertion_point(module_scope)

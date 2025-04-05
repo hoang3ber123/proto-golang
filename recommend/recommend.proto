@@ -1,6 +1,5 @@
 syntax = "proto3";
 package recommend;
-import "google/protobuf/timestamp.proto";
 option go_package = "github.com/hoang3ber123/proto-golang/recommend;recommendproto";
 
 // The greeting service definition.
@@ -32,7 +31,7 @@ message ProductRecommend {
   string id = 1;
   string title = 2;
   repeated string categories = 3;
-  google.protobuf.Timestamp created_at = 4;
+  string created_at = 4;
   double pricing = 5;
 }
 
