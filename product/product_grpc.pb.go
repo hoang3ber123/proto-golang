@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ProductService_GetProductsInCart_FullMethodName = "/product.ProductService/GetProductsInCart"
+	ProductService_GetProductsInfo_FullMethodName        = "/product.ProductService/GetProductsInfo"
+	ProductService_ClearCartAfterCheckout_FullMethodName = "/product.ProductService/ClearCartAfterCheckout"
 )
 
 // ProductServiceClient is the client API for ProductService service.
@@ -29,7 +30,9 @@ const (
 // The greeting service definition.
 type ProductServiceClient interface {
 	// get product list in cart
-	GetProductsInCart(ctx context.Context, in *GetProductsInCartRequest, opts ...grpc.CallOption) (*GetProductsInCartResponse, error)
+	GetProductsInfo(ctx context.Context, in *GetProductsInfoRequest, opts ...grpc.CallOption) (*GetProductsInfoResponse, error)
+	// clear cart after check out
+	ClearCartAfterCheckout(ctx context.Context, in *ClearCartAfterCheckoutRequest, opts ...grpc.CallOption) (*ClearCartAfterCheckoutResponse, error)
 }
 
 type productServiceClient struct {
@@ -40,10 +43,20 @@ func NewProductServiceClient(cc grpc.ClientConnInterface) ProductServiceClient {
 	return &productServiceClient{cc}
 }
 
-func (c *productServiceClient) GetProductsInCart(ctx context.Context, in *GetProductsInCartRequest, opts ...grpc.CallOption) (*GetProductsInCartResponse, error) {
+func (c *productServiceClient) GetProductsInfo(ctx context.Context, in *GetProductsInfoRequest, opts ...grpc.CallOption) (*GetProductsInfoResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetProductsInCartResponse)
-	err := c.cc.Invoke(ctx, ProductService_GetProductsInCart_FullMethodName, in, out, cOpts...)
+	out := new(GetProductsInfoResponse)
+	err := c.cc.Invoke(ctx, ProductService_GetProductsInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productServiceClient) ClearCartAfterCheckout(ctx context.Context, in *ClearCartAfterCheckoutRequest, opts ...grpc.CallOption) (*ClearCartAfterCheckoutResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ClearCartAfterCheckoutResponse)
+	err := c.cc.Invoke(ctx, ProductService_ClearCartAfterCheckout_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +70,9 @@ func (c *productServiceClient) GetProductsInCart(ctx context.Context, in *GetPro
 // The greeting service definition.
 type ProductServiceServer interface {
 	// get product list in cart
-	GetProductsInCart(context.Context, *GetProductsInCartRequest) (*GetProductsInCartResponse, error)
+	GetProductsInfo(context.Context, *GetProductsInfoRequest) (*GetProductsInfoResponse, error)
+	// clear cart after check out
+	ClearCartAfterCheckout(context.Context, *ClearCartAfterCheckoutRequest) (*ClearCartAfterCheckoutResponse, error)
 	mustEmbedUnimplementedProductServiceServer()
 }
 
@@ -68,8 +83,11 @@ type ProductServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedProductServiceServer struct{}
 
-func (UnimplementedProductServiceServer) GetProductsInCart(context.Context, *GetProductsInCartRequest) (*GetProductsInCartResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetProductsInCart not implemented")
+func (UnimplementedProductServiceServer) GetProductsInfo(context.Context, *GetProductsInfoRequest) (*GetProductsInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductsInfo not implemented")
+}
+func (UnimplementedProductServiceServer) ClearCartAfterCheckout(context.Context, *ClearCartAfterCheckoutRequest) (*ClearCartAfterCheckoutResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClearCartAfterCheckout not implemented")
 }
 func (UnimplementedProductServiceServer) mustEmbedUnimplementedProductServiceServer() {}
 func (UnimplementedProductServiceServer) testEmbeddedByValue()                        {}
@@ -92,20 +110,38 @@ func RegisterProductServiceServer(s grpc.ServiceRegistrar, srv ProductServiceSer
 	s.RegisterService(&ProductService_ServiceDesc, srv)
 }
 
-func _ProductService_GetProductsInCart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetProductsInCartRequest)
+func _ProductService_GetProductsInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProductsInfoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductServiceServer).GetProductsInCart(ctx, in)
+		return srv.(ProductServiceServer).GetProductsInfo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ProductService_GetProductsInCart_FullMethodName,
+		FullMethod: ProductService_GetProductsInfo_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServiceServer).GetProductsInCart(ctx, req.(*GetProductsInCartRequest))
+		return srv.(ProductServiceServer).GetProductsInfo(ctx, req.(*GetProductsInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductService_ClearCartAfterCheckout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClearCartAfterCheckoutRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServiceServer).ClearCartAfterCheckout(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ProductService_ClearCartAfterCheckout_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServiceServer).ClearCartAfterCheckout(ctx, req.(*ClearCartAfterCheckoutRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -118,8 +154,12 @@ var ProductService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ProductServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetProductsInCart",
-			Handler:    _ProductService_GetProductsInCart_Handler,
+			MethodName: "GetProductsInfo",
+			Handler:    _ProductService_GetProductsInfo_Handler,
+		},
+		{
+			MethodName: "ClearCartAfterCheckout",
+			Handler:    _ProductService_ClearCartAfterCheckout_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

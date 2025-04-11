@@ -5,30 +5,43 @@ option go_package = "github.com/hoang3ber123/proto-golang/product;productproto";
 // The greeting service definition.
 service ProductService {
   // get product list in cart
-  rpc GetProductsInCart (GetProductsInCartRequest) returns (GetProductsInCartResponse);
+  rpc GetProductsInfo (GetProductsInfoRequest) returns (GetProductsInfoResponse);
+  // clear cart after check out
+  rpc ClearCartAfterCheckout (ClearCartAfterCheckoutRequest) returns (ClearCartAfterCheckoutResponse);
 }
 
-// Cart Message
-message CartItemRequest {
-  string key = 1;             // related_type (Example: "product", "service", ...)
-  repeated string values = 2; // related_id
+// ProductsInfoRequest Message
+message ProductsInfoRequest {
+  string related_id = 1;
+  string related_type = 2; // related_type (Example: "products", "services", ...) 
 }
 
-// GetProductsInCartRequest message
-message GetProductsInCartRequest {
-  repeated CartItemRequest cart = 1; // Danh sách các loại sản phẩm/dịch vụ
+// GetProductsInfoRequest message
+message GetProductsInfoRequest {
+  repeated ProductsInfoRequest products = 1; // Danh sách các loại sản phẩm/dịch vụ
 }
 
 message Product {
   string id = 1;
   string title = 2;
-  string image = 3;
-  string related_type =4;
-  double price = 5;
+  string slug = 3;
+  string image = 4;
+  string related_type = 5;
+  double price = 6;
 }
 
-message GetProductsInCartResponse {
+message GetProductsInfoResponse {
   repeated Product products = 1;
+  int32 status_code = 2;
+  string error = 3;
+}
+
+// ClearCartAfterCheckoutRequest message
+message ClearCartAfterCheckoutRequest {
+  repeated ProductsInfoRequest products = 1; // Danh sách các loại sản phẩm/dịch vụ
+}
+
+message ClearCartAfterCheckoutResponse {
   int32 status_code = 2;
   string error = 3;
 }
